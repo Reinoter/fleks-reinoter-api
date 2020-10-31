@@ -1,4 +1,6 @@
 import express from 'express';
+import { Database } from './db';
+
 const app = express();
 const port = 3000; // default port to listen
 
@@ -7,7 +9,13 @@ app.get("/", ( req, res ) => {
     res.send("Hello world!");
 });
 
-// start the Express server
-app.listen(port, () => {
-    console.log(`server started at http://localhost:${ port }`);
-});
+
+
+Database.connectToDb()
+    .then(() => {
+        console.log("Connected to database");
+        // start the Express server
+        app.listen(port, () => {
+            console.log(`server started at http://localhost:${ port }`);
+        });
+    })

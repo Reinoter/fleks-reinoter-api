@@ -1,0 +1,3 @@
+{
+    "URL":"mongodb://fleks:wkNBAuJXNjx8PgRt@otterdb-shard-00-00-xscqn.gcp.mongodb.net:27017,otterdb-shard-00-01-xscqn.gcp.mongodb.net:27017,otterdb-shard-00-02-xscqn.gcp.mongodb.net:27017/fleks?ssl=true&replicaSet=otterdb-shard-0&authSource=admin&retryWrites=true"
+}
