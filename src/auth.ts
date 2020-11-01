@@ -24,7 +24,7 @@ export class Auth{
         /*LOCAL STRATEGY*/
         passport.use(new LocalStrategy(
             (username, password, done) => {
-                Database.User.authenticate(Database.User, username, password, (err, user) => {;
+                Database.User.authenticate(Database.User, username, password, (err, user) => {
                     if(err) return done(null, false, err)
                     if(!user) return done(null, false, "no such user")
                     return done(null, this.formatUserReturn(user));
