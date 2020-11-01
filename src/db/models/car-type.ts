@@ -8,7 +8,7 @@ var CarType = new Mongoose.Schema({
         type: String,
         required: true
     },
-    prices: {
+    price: {
         type: Number,
         required: true
     },
@@ -18,17 +18,15 @@ var CarType = new Mongoose.Schema({
     },
     transmissionType: {
         type: String,
-        enum: ["Automatic", "Manual"],
         required: true
     },
     fuelType: {
         type: String,
-        enum: ["Electric" ,"Gasoline", "Diesel", "Petroleum", "Natural Gas", "Ethanol", "Bio-diesel"],
         required: true
     },
     trunkSpace: {
-        type: Number,
-        default: 0
+        type: String,
+        required: true
     },
     _created_at: {type: Date, default: Date.now}
 });
