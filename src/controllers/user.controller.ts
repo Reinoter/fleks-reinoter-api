@@ -19,7 +19,7 @@ userRouter.put("/", async function(req,res,next){
 });
 
 userRouter.post('/login', function (req, res, next){
-      var method = req.body.email?'local':'bearer';
+      var method = req.body.username?'local':'bearer';
       Auth.authenticate(method, req, res, next, function(err, user, info) {
         if(err) return next(err);
         if (!user) return res.status(401).send(info);
