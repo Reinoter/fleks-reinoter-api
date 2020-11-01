@@ -12,7 +12,7 @@ var User = new Mongoose.Schema({
         type: String,
         required: true,
     },
-    _created_at: {type: Date, default: Date.now}
+    created_at: {type: Date, default: Date.now}
 });
 
 User.pre('save',  function (next) {
