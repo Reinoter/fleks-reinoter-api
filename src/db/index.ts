@@ -45,7 +45,6 @@ export class Database{
         this._User = connection.model('users', models.User);
         this._Subscription = connection.model('subscriptions', models.Subscription);
         this._CarType = connection.model('car-types', models.CarType);
-        console.log("modeled user ", this._User);
     }
 
     static handleMongodbError(e:any){

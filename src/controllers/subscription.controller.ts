@@ -5,12 +5,14 @@ let subscriptionRouter = express.Router();
 
 subscriptionRouter.get("/", function(req, res, next){
     Database.Subscription.find({})
+        .populate('car', 'image name')
         .then(docs => res.json(docs))
         .catch(e => next("We couldn't fetch subscription"))
 })
 
 subscriptionRouter.get("/id/:id", function(req, res, next){
     Database.Subscription.findOne({_id: req.params.id})
+        .populate('car', 'image name')
         .then(doc => {
             if(!doc) return next("We couldn't find the subscription you were looking for");
             res.json(doc);
@@ -20,8 +22,6 @@ subscriptionRouter.get("/id/:id", function(req, res, next){
 
 //Insert subscription
 subscriptionRouter.put("/", function(req,res,next){
-    console.log(req.user);
-
     new Database.Subscription({
         deliveryDate: req.body.deliveryDate,
         address: req.body.address,
