@@ -9,6 +9,15 @@ carTypeRouter.get("/", function(req, res, next){
         .catch(e => next("We couldn't fetch car types"))
 })
 
+carTypeRouter.get("/id/:id", function(req, res, next){
+    Database.CarType.findOne({_id: req.params.id})
+        .then(doc => {
+            if(!doc) return next("We couldn't find the car-type you were looking for");
+            res.json(doc);
+        })
+        .catch(e => next("We couldn't fetch your car-type"))
+})
+
 //Insert carType
 carTypeRouter.put("/", function(req,res,next){
     new Database.CarType(req.body).save()
