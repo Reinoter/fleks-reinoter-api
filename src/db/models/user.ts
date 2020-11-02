@@ -15,6 +15,7 @@ var User = new Mongoose.Schema({
     created_at: {type: Date, default: Date.now}
 });
 
+/* Creating a hashed password before saving user */
 User.pre('save',  function (next) {
     var user:any = this;
     Bcrypt.hash(user.password, 10, function (err, hash){
@@ -24,6 +25,8 @@ User.pre('save',  function (next) {
     })
 });
 
+
+/* Validating user based on JWT token */
 User.statics.validateToken = function(Model, token, callback) {
     // Handeling invalid token from browser
     if(token == "undefined") return callback("Unauthorized");
@@ -40,7 +43,7 @@ User.statics.validateToken = function(Model, token, callback) {
     });
 };
 
-// Generating valid Jwt token
+/* Generating valid Jwt token */
 User.methods.generateJwt = function(user) {
     return Jwt.sign({
         _id: user._id,
@@ -48,7 +51,7 @@ User.methods.generateJwt = function(user) {
     }, process.env.JWT_SECRET);
 };
 
-// Validating user based on username and password
+/* Validating user based on username and password */
 User.statics.authenticate = function (Model, email, password, callback) {
     var emailExp = new RegExp("^" + email + "$", 'i')
 

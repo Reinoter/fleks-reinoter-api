@@ -4,18 +4,22 @@ import {Database} from './db';
 const LocalStrategy = require('passport-local').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
 
-export class Auth{
-    static init(){
-        // passport.serializeUser(function(user, done) {
-        //     done(null, user._id);
-        // });
-        //
-        // passport.deserializeUser(function(user_id, done) {
-        //     Database.User.findById(user_id).exec()
-        //         .then(user => done(null, this.formatUserReturn(user)))
-        //         .catch(e => done(e, null));
-        // });
+// Did not find an ES6 equvivalent
+const jwt = require('express-jwt');
 
+export class Auth{
+    static _user; //user authentication middleware for express.
+
+    static get user(){
+        return this._user;
+    }
+
+    static init(){
+        this._user = jwt({
+            secret: process.env.JWT_SECRET,
+            algorithms: ['HS256']
+        });
+        
         /*
         #STRATEGIES#
         Add as many passport strategies as we want following here.
@@ -45,12 +49,14 @@ export class Auth{
         ));
     }
 
+    /* Removing password from user return */
     static formatUserReturn(user){
         /* Removing variables we dont want to return */
         delete user.password;
         return {user: user, authToken: user.generateJwt(user)};
     }
 
+    /* Passport authenticate */
     static authenticate(location, req, res, next, callback){
         passport.authenticate(location, callback)(req,res,next);
     }

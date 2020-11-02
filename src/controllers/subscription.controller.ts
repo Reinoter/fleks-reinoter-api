@@ -3,13 +3,22 @@ import { Database } from './../db';
 import { Auth } from './../auth';
 let subscriptionRouter = express.Router();
 
+/*
+    Getting subscriptions for user
+    Access: user (from parent middlware)
+*/
 subscriptionRouter.get("/", function(req, res, next){
-    Database.Subscription.find({})
+    Database.Subscription.find({user:req.user._id})
         .populate('car', 'image name')
         .then(docs => res.json(docs))
         .catch(e => next("We couldn't fetch subscription"))
 })
 
+
+/*
+    Getting subscriptions by ID.
+    Access: user (from parent middlware)
+*/
 subscriptionRouter.get("/id/:id", function(req, res, next){
     Database.Subscription.findOne({_id: req.params.id})
         .populate('car', 'image name')
@@ -20,7 +29,10 @@ subscriptionRouter.get("/id/:id", function(req, res, next){
         .catch(e => next("We couldn't fetch your subscription"))
 })
 
-//Insert subscription
+/*
+    Insert subscription
+    Access: user (from parent middlware)
+*/
 subscriptionRouter.put("/", function(req,res,next){
     new Database.Subscription({
         deliveryDate: req.body.deliveryDate,
@@ -31,16 +43,6 @@ subscriptionRouter.put("/", function(req,res,next){
     .then((subscription) => res.json(subscription))
     .catch(e => {
         next("We couldn't create the supscription!")
-    });
-});
-
-//Insert subscription
-subscriptionRouter.post("/id/:id", function(req,res,next){
-    Database.Subscription.findOneAndUpdate({_id: req.params.id}, {$set: req.body}, {new: true})
-    .then((subscription) => res.json(subscription))
-    .catch(e => {
-        console.error(e);
-        next("We couldn't create the subscription!")
     });
 });
 
