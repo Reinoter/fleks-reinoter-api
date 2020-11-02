@@ -4,7 +4,7 @@
   "description": "Backend API for fleks assignment response during application process for a Senior Fullstack Developer position.",
   "main": "src/index.ts",
   "scripts": {
-    "prod": "tsc",
+    "prod": "tsc && node ./dist --prod",
     "dev": "ts-node-dev src/index.ts"
   },
   "repository": {
